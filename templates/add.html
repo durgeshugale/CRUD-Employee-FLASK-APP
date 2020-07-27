@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Employee</title>
+	<meta charset="utf-8">
+	<script src="static/js/jquery.js"></script>
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+	
+	<script type="text/javascript" src="static/js/all.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+</head>
+<body>
+    <nav class="bg navbar navbar-expand-lg navbar-dark text-light">
+  <a class="navbar-brand" href="{{url_for('Index')}}"><i class="fa fa-users" aria-hidden="true"></i></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('Index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Employee
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{url_for('add')}}">Add Employee</a>
+          <a class="dropdown-item" href="#">View Employee</a>
+        </div>
+      </li>
+		<li class="nav-item">
+        <a class="nav-link" href="#">Contact us </a>
+      </li>
+		<li class="nav-item">
+        <a class="nav-link" href="#">Support </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" method="post" >
+      <input class="form-control mr-sm-2" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search by Employee" aria-label="Search">
+<!--      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+    </form>
+
+
+  </div>
+</nav>
+
+
+</ul>
+	<div class="container">
+<!--	<div class="d-flex mt-5">-->
+<!--			<div class="form-group mr-2">-->
+<!--            <select name="id" id="eid" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark" style="font-size: 13px; opacity: 0.8">-->
+
+<!--                <option class="dropdown-item"   value="">Select Employee id</option>-->
+
+<!--                <option class="dropdown-item"   value="1">1</option>-->
+<!--                <option class="dropdown-item"   value="2">2</option>-->
+<!--            </select>-->
+<!--			</div>-->
+<!--			<div class="form-group ename">-->
+<!--				<select name="name" id="ename" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">-->
+
+<!--					<option class="dropdown-item"   value="">Select Employee name</option>-->
+<!--					<option class="dropdown-item"   value="durgesh">durgesh</option>-->
+<!--                	<option class="dropdown-item"   value="deepesh">deepesh</option>-->
+<!--				</select>-->
+<!--			</div>-->
+
+<!--		</div>-->
+        <nav>
+              <div class="nav nav-tabs my-5 d-flex" id="nav-tab" role="tablist">
+                <a class="mr-auto nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Add Employee</a>
+                  <a href="{{url_for('Index')}}" class="mt-1"><button type="button" class="btn btn-dark" style="font-size: 12px;"><i class="fa fa-home" aria-hidden="true"></i> Home</button></a>
+
+              </div>
+            </nav>
+
+
+
+		<form method="post" action="{{url_for('insert')}}">
+
+		
+			<div class="row w-100">
+
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="id">Employee ID</label>
+				    <input type="text" name="id" class="form-control" id="id" placeholder="Please enter Employee ID" required>
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Employee first name</label>
+				    <input type="text" name="fn" class="form-control" id="fn" placeholder="Please enter Employee First name" required>
+				  </div>
+	
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="ln">Employee Last name</label>
+				    <input type="text" name="ln" class="form-control" id="ln" placeholder="Please enter Employee Last name">
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="gender">Gender</label>
+				    <select name="gender" id="gender" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8;">
+				      <option class="dropdown-item"   value="Male">Male</option>
+				      <option class="dropdown-item"   value="Female">Female</option>
+				      
+				    </select>
+				  </div>
+	
+			</div>
+
+		</div>
+
+		<div class="row w-100">
+
+			
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Date Of Birth</label>
+				    <input type="text" name="dob" class="form-control" id="dob" placeholder="Please enter Date of Birth">
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Mobile No.</label>
+				    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Please enter Mobile Number" required>
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Employee Branch</label>
+				    <input type="text" name="br" class="form-control" id="br" placeholder="Please enter Employee Branch" required>
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="email">Email ID</label>
+				    <input type="email" name="email" class="form-control" id="email" placeholder="Please Enter Email ID" required>
+				  </div>
+			</div>
+		</div>
+
+
+		<div class="row w-100">
+
+			
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Marital Status</label>
+				    <select name="ms" id="ms" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+				      <option class="dropdown-item"   value="Married">Married</option>
+				      <option class="dropdown-item"   value="UnMarried">UnMarried</option>
+				      
+				    </select>
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="bg">Blood Group</label>
+
+				    <select name="bg" id="bg" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+				      <option class="dropdown-item"   value="A">A</option>
+				      <option class="dropdown-item"   value="B">B</option>
+				      <option class="dropdown-item"   value="A+">A+</option>
+				      <option class="dropdown-item"   value="B+">B+</option>
+				      
+				    </select>
+				   
+				  </div>
+			</div>
+
+		</div>
+
+		<button type="submit" class="btn btn-dark " style="font-size: 12px; color:white;"><i class="fa fa-plus" aria-hidden="true"></i> Add Employee</button>
+		<a href="{{url_for('Index')}}" class=""><button type="button" class="btn btn-dark" style="font-size: 12px;"><i class="fa fa-home" aria-hidden="true"></i> Home</button></a>
+
+		</form>
+
+
+
+
+
+
+
+	</div>
+
+
+        <!-- Footer -->
+
+<div class="footer text-light font-small blue pt-4" style="">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase">Footer Content</h5>
+        <p>Here you can use rows and columns to organize your footer content.</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="#"> Employee.com</a>
+  </div>
+  <!-- Copyright -->
+
+</div>
+<!-- Footer -->
+
+<script>
+	$('#eid').on('change', function() {
+  var value = $(this).val();
+  if(value==1){
+<!--  	document.getElementById("ename").options[0]=new Option("Durgesh","durgesh");-->
+		$('#ename').val("durgesh").change();
+		console.log(value);
+  }
+
+  if(value==2){
+<!--  	document.getElementById("ename").options[0]=new Option("Deepesh","deepesh");-->
+		$('#ename').val("deepesh").change();
+  }
+
+});
+
+</script>
+
+</body>
+</html>

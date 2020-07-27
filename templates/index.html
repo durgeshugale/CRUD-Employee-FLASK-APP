@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Employee</title>
+	<meta charset="utf-8">
+
+	<script src="static/js/jquery.js"></script>
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loader.css') }}">
+
+	
+	<script type="text/javascript" src="static/js/all.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+
+</head>
+
+<body>
+<!-- partial:index.partial.html -->
+<html>
+  <head>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</head>
+  <div class="loader"></div>
+  <body>
+    <div class="content" >
+      <nav class=" bg navbar navbar-expand-lg navbar-dark text-light">
+  <a class="navbar-brand" href="{{url_for('Index')}}"><i class="fa fa-users" aria-hidden="true"></i></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('Index')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Employee
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{url_for('add')}}">Add Employee</a>
+          <a class="dropdown-item" href="#">View Employee</a>
+        </div>
+      </li>
+		<li class="nav-item">
+        <a class="nav-link" href="#">Contact us </a>
+      </li>
+		<li class="nav-item">
+        <a class="nav-link" href="#">Support </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" method="post" >
+      <input class="form-control mr-sm-2" type="search" id="myInput" onkeyup="myFunction()" placeholder="Search by Employee" aria-label="Search">
+<!--      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+    </form>
+
+
+  </div>
+</nav>
+
+	<div class="container">
+
+<!--        <div class="d-flex mt-5">-->
+
+<!--        <div class="form-group mr-2">-->
+<!--            <select name="id" id="eid" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark" style="font-size: 13px; opacity: 0.8">-->
+
+<!--                <option class="dropdown-item"   value="">Select Employee id</option>-->
+<!--                {% for row in employees %}-->
+<!--                <option class="dropdown-item"   value="{{row.id}}">{{row.id}}</option>-->
+
+<!--                {% endfor %}-->
+
+<!--            </select>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <select name="name" id="ename" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark" style="font-size: 13px; opacity: 0.8">-->
+
+<!--                <option class="dropdown-item"   value="">Select Employee name</option>-->
+<!--                {% for row in employees %}-->
+<!--                <option class="dropdown-item"   value="{{row.id}}">{{row.firstname}}</option>-->
+<!--                {% endfor %}-->
+<!--            </select>-->
+<!--        </div>-->
+<!--    </div>-->
+
+		<nav>
+              <div class="nav nav-tabs my-5 mb-4 d-flex" id="nav-tab" role="tablist">
+                <a class="mr-auto nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Manage Employee</a>
+                  <a href="{{url_for('add')}}" class="mt-1"><button type="button" class="btn btn-dark" style="font-size: 12px;"><i class="fa fa-plus" aria-hidden="true"></i> Add Employee</button></a>
+
+              </div>
+            </nav>
+
+        {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                {% for message in messages %}
+
+                <div class="alert alert-success alert-dismissable" role="alert">
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                        <span aria-hidden="true">x</span>
+
+                    </button>
+
+
+                {{message}}
+
+
+                </div>
+
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+
+		<table id="myTable" class="table">
+
+		  <thead class="thead-dark">
+		    <tr>
+
+		      <th scope="col">Operation</th>
+		      <th scope="col">#</th>
+		      <th scope="col">Employee First Name</th>
+		      <th scope="col">Employee Contact #</th>
+		      <th scope="col">Employee Email ID</th>
+		      <th scope="col">Employee Branch/Depot</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+
+                   {% for row in employees %}
+		    <tr>
+		      <th scope="row">
+                  <a href="#" class="text-primary view link link-four pulse-grow-on-hover text-dark" data-toggle="modal" data-target="#modalview{{row.id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+
+                  <a href="/delete/{{row.id}}" onclick="return confirm('Are You Sure To Delete ?')" class="ml-2 link link-four pulse-grow-on-hover" style="color:red;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              </th>
+		      <td class="rid" >{{row.id}}</td>
+		      <td class="">{{row.firstname}}</td>
+		      <td class="">{{row.phone}}</td>
+		      <td class="">{{row.email}}</td>
+		      <td class="">{{row.branch}}</td>
+		    </tr>
+
+		  </tbody>
+
+
+             <!-- Modal Edit Employee-->
+
+            <div id="modalview{{row.id}}" class="modal fade" role="dialog">
+
+               <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered ">
+
+                  <div class="modal-content">
+
+                     <div class="modal-header">
+
+
+                        <h4 class="modal-title">View Employee Details</h4>
+
+
+                     </div>
+
+
+                     <div class="modal-body">
+
+                         <form method="post" action="">
+
+                            <div class="row w-100">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="id">Employee ID</label>
+                                    <input type="text" name="id" class="form-control" id="id" placeholder="Please enter Employee ID" value="{{row.id}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Employee first name</label>
+                                    <input type="text" name="fn" class="form-control" id="fn" placeholder="Please enter Employee First name" value="{{row.firstname}}" required>
+                                  </div>
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="ln">Employee Last name</label>
+                                    <input type="text" name="ln" class="form-control" id="ln" placeholder="Please enter Employee Last name" value="{{row.lastname}}">
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8;">
+                                      <option class="dropdown-item"   value="{{row.gender}}">{{row.gender}}</option>
+
+
+                                    </select>
+                                  </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row w-100">
+
+
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Date Of Birth</label>
+                                    <input type="text" name="dob" class="form-control" id="dob" placeholder="Please enter Date of Birth" value="{{row.dob}}">
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Mobile No.</label>
+                                    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Please enter Mobile Number" value="{{row.phone}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Employee Branch</label>
+                                    <input type="text" name="br" class="form-control" id="br" placeholder="Please enter Employee Branch" value="{{row.branch}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="email">Email ID</label>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Please Enter Email ID" value="{{row.email}}" required>
+                                  </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row w-100">
+
+
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Marital Status</label>
+                                    <select name="ms" id="ms" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+                                      <option class="dropdown-item"   value="{{row.maritalstatus}}">{{row.maritalstatus}}</option>
+
+
+                                    </select>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="bg">Blood Group</label>
+
+                                    <select name="bg" id="bg" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+                                      <option class="dropdown-item" value="{{row.bloodgroup}}">{{row.bloodgroup}}</option>
+
+                                    </select>
+
+                                  </div>
+                            </div>
+
+                        </div>
+
+                        </form>
+
+
+                     </div>
+
+
+                     <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+                     </div>
+
+
+                  </div>
+
+
+               </div>
+
+            </div>
+
+            <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+
+               <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered ">
+
+                  <div class="modal-content">
+
+                     <div class="modal-header">
+
+
+                        <h4 class="modal-title">View Employee Details</h4>
+
+
+                     </div>
+
+
+                     <div class="modal-body">
+
+                         <form method="post" action="">
+
+                            <div class="row w-100">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="id">Employee ID</label>
+                                    <input type="text" name="id" class="form-control" id="id" placeholder="Please enter Employee ID" value="{{row.id}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Employee first name</label>
+                                    <input type="text" name="fn" class="form-control" id="fn" placeholder="Please enter Employee First name" value="{{row.firstname}}" required>
+                                  </div>
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="ln">Employee Last name</label>
+                                    <input type="text" name="ln" class="form-control" id="ln" placeholder="Please enter Employee Last name" value="{{row.lastname}}">
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8;">
+                                      <option class="dropdown-item"   value="{{row.gender}}">{{row.gender}}</option>
+
+
+                                    </select>
+                                  </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row w-100">
+
+
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Date Of Birth</label>
+                                    <input type="text" name="dob" class="form-control" id="dob" placeholder="Please enter Date of Birth" value="{{row.dob}}">
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Mobile No.</label>
+                                    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Please enter Mobile Number" value="{{row.phone}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Employee Branch</label>
+                                    <input type="text" name="br" class="form-control" id="br" placeholder="Please enter Employee Branch" value="{{row.branch}}" required>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="email">Email ID</label>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Please Enter Email ID" value="{{row.email}}" required>
+                                  </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row w-100">
+
+
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="fn">Marital Status</label>
+                                    <select name="ms" id="ms" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+                                      <option class="dropdown-item"   value="{{row.maritalstatus}}">{{row.maritalstatus}}</option>
+
+
+                                    </select>
+                                  </div>
+
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="bg">Blood Group</label>
+
+                                    <select name="bg" id="bg" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+                                      <option class="dropdown-item" value="{{row.bloodgroup}}">{{row.bloodgroup}}</option>
+
+                                    </select>
+
+                                  </div>
+                            </div>
+
+                        </div>
+
+                        </form>
+
+
+                     </div>
+
+
+                     <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+                     </div>
+
+
+                  </div>
+
+
+               </div>
+
+            </div>
+
+                    {% endfor %}
+
+		</table>
+
+	</div>
+
+        <!-- Footer -->
+<div class="footer text-light font-small blue pt-4" style="">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase">Footer Content</h5>
+        <p>Here you can use rows and columns to organize your footer content.</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Link 1</a>
+          </li>
+          <li>
+            <a href="#!">Link 2</a>
+          </li>
+
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="#"> Employee.com</a>
+  </div>
+  <!-- Copyright -->
+
+</div>
+<!-- Footer -->
+
+
+
+<script type="text/javascript">
+
+  //  $('a.view').on('click',function(){
+  //   if($(this).closest('tr').find('td').hasClass("d-none")===true){
+  //   $(this).closest('tr').find('td').removeClass('d-none')
+  //   }
+  //   else
+  //   $(this).closest('tr').find('td').addClass('d-none')
+  // });
+
+  $('#eid').on('change', function() {
+  var id = $(this).val();
+  $('#ename').val(id.toString())
+  $('.rid').each(function(){
+    if($(this).text() === id ){
+        $(this).parent().removeClass('d-none');
+    }
+    else{
+        $(this).parent().addClass('d-none');
+    }
+   })
+    });
+
+    var ids = [];
+    $('#eid option').each(function(){ ids.push($(this).val() )})
+    console.log(ids);
+
+  function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+  </body>
+</html>
+<!-- partial -->
+  <script  src="static/js/loader.js"></script>
+
+</body>
+
+</html>

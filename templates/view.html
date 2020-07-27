@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Employee</title>
+	<meta charset="utf-8">
+	<script src="static/js/jquery.js"></script>
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+	
+	<script type="text/javascript" src="static/js/all.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+</head>
+<body>
+
+	<div class="container">
+	
+		<div class="head mt-5">View Employee</div>
+		
+		<div class="subhead mt-2 mb-3">view Employee</div>
+		{% for row in employees %}
+		<form>
+			<div class="row w-100">
+
+			<div class="col-sm-3">
+
+				<div class="form-group">
+				    <label for="mn">Employee ID</label>
+				    <input type="text" name="id" class="form-control" id="#input-field-id" placeholder="Please enter Employee ID">
+				  </div>
+	
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Employee first name</label>
+				    <input type="text" name="fn" class="form-control" id="fn" placeholder="Please enter Employee First name">
+				  </div>
+	
+			</div>
+		
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="ln">Employee Last name</label>
+				    <input type="text" name="ln" class="form-control" id="ln" placeholder="Please enter Employee Last name">
+				  </div>
+	
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="gender">Gender</label>
+				    <select name="gender" id="ms" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+				      <option class="dropdown-item"   value="Male">Male</option>
+				      <option class="dropdown-item"   value="Female">Female</option>
+				      
+				    </select>
+				  </div>
+	
+			</div>
+		</div>
+
+		<div class="row w-100">
+
+			
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Date Of Birth</label>
+				    <input type="text" name="dob" class="form-control" id="dob" placeholder="Please enter Date of Birth">
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Mobile No.</label>
+				    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Please enter Mobile Number">
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Employee Branch</label>
+				    <input type="text" name="br" class="form-control" id="br" placeholder="Please enter Employee Branch">
+				  </div>
+	
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="email">Email ID</label>
+				    <input type="email" name="email" class="form-control" id="email" placeholder="Please Enter Email ID">
+				  </div>
+			</div>
+		</div>
+
+
+		<div class="row w-100">
+
+			
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="fn">Marital Status</label>
+				    <select name="ms" id="ms" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+				      <option class="dropdown-item"   value="Married">Married</option>
+				      <option class="dropdown-item"   value="UnMarried">UnMarried</option>
+				      
+				    </select>
+				  </div>
+	
+			</div>
+
+			<div class="col-sm-3">
+				<div class="form-group">
+				    <label for="bg">Blood Group</label>
+
+				    <select name="bg" id="bg" class="btn btn-secondary dropdown-toggle bg-light border border-none text-dark w-100" style="font-size: 13px; opacity: 0.8">
+				      <option class="dropdown-item"   value="A">A</option>
+				      <option class="dropdown-item"   value="B">B</option>
+				      <option class="dropdown-item"   value="A+">A+</option>
+				      <option class="dropdown-item"   value="B+">B+</option>
+				      
+				    </select>
+				   
+				  </div>
+			</div>
+
+		</div>
+
+		</form>
+
+
+	</div>
+
+	<script type="text/javascript">
+		$('#input-field-id').val($('#input-field-id').val() + {{row.id}});
+	</script>
+	{% endfor %}
+
+</body>
+</html>
